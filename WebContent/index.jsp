@@ -14,6 +14,14 @@
 		<nav class="navbar navbar-dark bg-dark justify-content-between">
 			<a href="index.jsp" class="navbar-brand text-white">UTChat</a>
 		</nav>
+		
+		<%
+			if (request.getAttribute("response") != null && request.getAttribute("response").equals("Wrong_Password")) {
+
+				out.print("<div class = 'alert alert-danger text-center mt-2'> Wrong Password, please try again ! </div>");
+
+			}
+			%>
 
 		<div class="m-5 p-5 card">
 

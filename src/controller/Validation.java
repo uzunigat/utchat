@@ -49,6 +49,9 @@ public class Validation extends HttpServlet {
 					System.out.println("Wrong");
 					request.setAttribute("response", "Wrong_Password");
 					
+					RequestDispatcher rd = request.getRequestDispatcher("/index.jsp");
+					rd.include(request, response);
+					
 				}
 				
 				// OK Credentials

@@ -18,9 +18,9 @@
 		<div class="m-5 p-5 card">
 
 			<%
-			if (request.getParameter("response") != null && request.getParameter("response").equals("Already_Added")) {
+			if (request.getAttribute("response") != null && request.getAttribute("response").equals("Already_Added")) {
 
-				out.print("<div class = 'text-center'> This User is already on the system, please try again </div>");
+				out.print("<div class = 'alert alert-danger text-center'> This User is already on the system, please try again </div>");
 
 			}
 			%>
@@ -40,16 +40,16 @@
 				<div class="form-group mx-5">
 					<label for="exampleInputPassword1">Password</label> <input
 						type="password" class="form-control" name="password"
-						id="exampleInputPassword1" placeholder="Password">
+						id="password" placeholder="Password">
 				</div>
 
 				<div class="form-group mx-5">
 					<label for="exampleInputPassword1">Password</label> <input
 						type="password" class="form-control" name="password"
-						id="exampleInputPassword1" placeholder="Password">
+						id="confirmPassword" placeholder="Password">
 				</div>
 
-				<button type="submit" class="btn btn-primary mx-5 my-2 float-right ">
+				<button id="registerButton" type="submit" class="btn btn-primary mx-5 my-2 float-right ">
 					Register</button>
 
 			</form>

@@ -28,7 +28,9 @@ public class ValidationRegister extends HttpServlet {
 		String nickname = request.getParameter("username");
 		String password = request.getParameter("password");
 		
-		if(User.searchUser(nickname) == null) {
+		System.out.println(User.searchUser(email).toString());
+		
+		if(User.searchUser(email) == null) {
 			
 			User user = new User(email, nickname, password, "Other");
 			

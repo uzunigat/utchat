@@ -19,50 +19,51 @@ import javax.websocket.Session;
 @ServerEndpoint(value = "/echo/{chatId}/{nickname}")
 public class ServerChat {
 
-
-    private static Map<String,CopyOnWriteArraySet<ServerChat>> chatRooms= new HashMap();
-    private Session sessionUser=null;
-    private String nickname="";
-    private String chatId="";
-    private User currentUser=null;
-    
+	private static Map<String, CopyOnWriteArraySet<ServerChat>> chatRooms = new HashMap();
+	private Session sessionUser = null;
+	private String nickname = "";
+	private String chatId = "";
+	private User currentUser = null;
 
 	@OnOpen
-	public void onOpen(Session session, @PathParam("nickname") String nickname,
-			@PathParam("chatId") String chatId) throws ClassNotFoundException, SQLException, IOException {
-		
-		
-		this.sessionUser=session;
-		this.nickname=nickname;
-		this.chatId=chatId;
-		String joinMessage="";
-		CopyOnWriteArraySet<ServerChat> listConnectedUsers=chatRooms.get(this.chatId);
-		if(listConnectedUsers==null) {
-			synchronized(chatRooms) {
-				if(!chatRooms.containsKey(this.chatId)) {
-					listConnectedUsers=new CopyOnWriteArraySet<ServerChat>();
+	public void onOpen(Session session, @PathParam("nickname") String nickname, @PathParam("chatId") String chatId)
+			throws ClassNotFoundException, SQLException, IOException {
+
+		this.sessionUser = session;
+		this.nickname = nickname;
+		this.chatId = chatId;
+		String joinMessage = "";
+		CopyOnWriteArraySet<ServerChat> listConnectedUsers = chatRooms.get(this.chatId);
+		if (listConnectedUsers == null) {
+			synchronized (chatRooms) {
+				if (!chatRooms.containsKey(this.chatId)) {
+					listConnectedUsers = new CopyOnWriteArraySet<ServerChat>();
 					chatRooms.put(this.chatId, listConnectedUsers);
 				}
 			}
 		}
 		listConnectedUsers.add(this);
 		currentUser = User.searchUserByNickname(nickname);
-		joinMessage=currentUser.getNickname() + " has joined the chat! ";
-		receivingMessage( session, joinMessage );
+		joinMessage = currentUser.getNickname() + " has joined the chat! ";
+		receivingMessage(session, joinMessage);
 
 	}
 
 	@OnMessage
 	public void receivingMessage(Session session, String message) {
 
-		CopyOnWriteArraySet<ServerChat> listConnectedUsers=chatRooms.get(this.chatId);
-		String messsageUser="";
-		if(listConnectedUsers!=null) {
-			for(ServerChat user:listConnectedUsers) {
-				if(message.contains("has joined to the conversation")) {
-					messsageUser=message;
-				}else {
-					messsageUser=currentUser.getNickname()+": "+message;
+		CopyOnWriteArraySet<ServerChat> listConnectedUsers = chatRooms.get(this.chatId);
+		String messsageUser = "";
+		if (listConnectedUsers != null) {
+			for (ServerChat user : listConnectedUsers) {
+				if (message.contains("has joined to the conversation")) {
+					messsageUser = message;
+				} else if (message.contains("has joined the chat")) {
+
+					messsageUser = "Server:" + message;
+
+				} else {
+					messsageUser = currentUser.getNickname() + ": " + message;
 				}
 
 				user.sessionUser.getAsyncRemote().sendText(messsageUser);
@@ -73,25 +74,23 @@ public class ServerChat {
 	@OnClose
 	public void closedConnection() {
 
-		CopyOnWriteArraySet<ServerChat> listConnectedUsers=chatRooms.get(this.chatId);
-		if(listConnectedUsers!=null) {
+		CopyOnWriteArraySet<ServerChat> listConnectedUsers = chatRooms.get(this.chatId);
+		if (listConnectedUsers != null) {
 
 			listConnectedUsers.remove(this);
 		}
 	}
-	
-	public static  List <User> getNameConnectedUsers(String nameChatRoom) throws ClassNotFoundException, SQLException, IOException {
 
-		List <User> listUsers = new ArrayList<User>();
-		CopyOnWriteArraySet<ServerChat> listConnectedUsers=chatRooms.get(nameChatRoom);
-		for (ServerChat user: listConnectedUsers) {
+	public static List<User> getNameConnectedUsers(String nameChatRoom)
+			throws ClassNotFoundException, SQLException, IOException {
+
+		List<User> listUsers = new ArrayList<User>();
+		CopyOnWriteArraySet<ServerChat> listConnectedUsers = chatRooms.get(nameChatRoom);
+		for (ServerChat user : listConnectedUsers) {
 			listUsers.add(User.searchUserByNickname(user.nickname));
 		}
 
 		return listUsers;
 	}
-	
 
 }
-
-                    

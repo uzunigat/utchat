@@ -51,7 +51,7 @@
 			<div class="col-3"></div>
 
 			<div class='col-3 d-flex justify-content-center text-center mt-4'>
-				<div class='card bg-light' style='width: 22rem;''>
+				<div class='card bg-light' style='width: 22rem;'>
 					<div class='-header'> Admin </div>
 					<img src='./images/admin.png'
 						class='card-img-top rounded mx-auto d-block my-2'
