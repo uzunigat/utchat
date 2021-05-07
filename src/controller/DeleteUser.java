@@ -31,18 +31,15 @@ public class DeleteUser extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-		String email = request.getParameter("email");
 		
-		System.out.println(email);
-		
+		// Read email to delete from the request
+		String email = request.getParameter("email");	
 		User user = User.searchUser(email);
 		
+		// Delete user from the Database by the email
 		try {
 			user.delete();
-			
 			RequestDispatcher rd = request.getRequestDispatcher("admin.jsp");
-			
 			rd.include(request, response);
 			
 		} catch (ClassNotFoundException | IOException | SQLException e) {

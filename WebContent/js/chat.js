@@ -2,11 +2,15 @@ $(document).ready(function() {
 
 	let endDate = $("#endDate").val();
 	let chatId = $("#chatId").val();
+	
+	let height = $(window).height();
+
+    $('#container').height(height);
 
 	console.log(chatId);
 
 	let username = $('#username');
-	let ws = new WebSocket("ws://127.0.0.1:8080/UTChat/echo/" + chatId + "/" + username.val());
+	let ws = new WebSocket("ws://"+location.hostname+":8080/UTChat/echo/" + chatId + "/" + username.val());
 
 
 	ws.addEventListener("open", function(evt) {

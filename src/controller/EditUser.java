@@ -32,16 +32,19 @@ public class EditUser extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		// Read information sended by the user
 		String lastEmail = request.getParameter("lastEmail");
 		String newEmail = request.getParameter("email");
 		String nickname = request.getParameter("nickname");
 		String role = request.getParameter("role");
 		
+		// Create new user and set the information read before
 		User user = User.searchUser(lastEmail);
 		user.setEmail(newEmail);
 		user.setNickname(nickname);
 		user.setRole(role);
 		
+		// Update the database
 		try {
 			user.save();
 		} catch (ClassNotFoundException | SQLException | IOException e) {
@@ -49,8 +52,8 @@ public class EditUser extends HttpServlet {
 			e.printStackTrace();
 		}
 		
+		// Redirect user to the Admin page
 		RequestDispatcher rd = request.getRequestDispatcher("admin.jsp");
-		
 		rd.include(request, response);
 
 	}

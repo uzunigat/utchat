@@ -9,17 +9,49 @@ import java.util.Vector;
 
 import config.MyConnection;
 
+/**
+ * User model
+ * 
+ * @author Uriel
+ *
+ */
 public class User extends ActiveRecordBase{
 	
+	/**
+	 * User email
+	 */
 	private String email;
+	
+	/**
+	 * User nickname
+	 */
 	private String nickname;
+	
+	/**
+	 * User password
+	 */
 	private String password;
+	
+	/**
+	 * User role (Admin, Other)
+	 */
 	private String role;
 	
+	/**
+	 * Constructor by default
+	 */
 	public User() {
 		this._builtFromDB = false;
 	}
 	
+	/**
+	 * Constructor
+	 * 
+	 * @param _email
+	 * @param _nickname
+	 * @param _password
+	 * @param _role
+	 */
 	public User(String _email, String _nickname, String _password, String _role) {
 		
 		this._builtFromDB = false;
@@ -30,6 +62,15 @@ public class User extends ActiveRecordBase{
 		
 	}
 	
+	/** 
+	 * Constructor
+	 * 
+	 * @param _email
+	 * @param _nickname
+	 * @param _password
+	 * @param _role
+	 * @param state
+	 */
 	public User (String _email, String _nickname, String _password, String _role, boolean state) {
 		
 		this._builtFromDB = state;
@@ -40,6 +81,7 @@ public class User extends ActiveRecordBase{
 		
 	}
 	
+	// Getters
 	public String getEmail() {
 		return email;
 	}
@@ -56,6 +98,7 @@ public class User extends ActiveRecordBase{
 		return role;
 	}
 	
+	// Setters
 	public void setPassword(String password) {
 		this.password = password;
 	}
@@ -72,6 +115,9 @@ public class User extends ActiveRecordBase{
 		this.role = role;
 	}
 	
+	/**
+	 * Search an user by email
+	 */
 	public static User searchUser(String email) {
 		
 		try {
@@ -101,6 +147,12 @@ public class User extends ActiveRecordBase{
 		
 	}
 	
+	/**
+	 * Search an user by nickname (unique)
+	 * 
+	 * @param nickname
+	 * @return
+	 */
 	public static User searchUserByNickname(String nickname) {
 		
 		try {
@@ -130,6 +182,11 @@ public class User extends ActiveRecordBase{
 		
 	}
 	
+	/**
+	 * Search all members method
+	 * 
+	 * @return a vector of all the users in the database
+	 */
 	public static Vector<String> SearchAllMembers() {
 		
 		Vector<String> members = new Vector<String>();
@@ -156,7 +213,10 @@ public class User extends ActiveRecordBase{
 		return members;
 		
 	}
-
+	
+	/**
+	 * Surcharge of method herits from ARB
+	 */
 	@Override
 	protected String _update() {
 		
@@ -168,7 +228,10 @@ public class User extends ActiveRecordBase{
 				+ " role = "+ roleValue +""
 				+ " WHERE email = '" + this.email + " '";
 	}
-
+	
+	/**
+	 * Surcharge of method herits from ARB
+	 */
 	@Override
 	protected String _insert() {
 		
@@ -178,6 +241,9 @@ public class User extends ActiveRecordBase{
 				+ " VALUES ('" + this.email + "' , '" + this.nickname + "' ,  '" +  this.password  +"', "+ role +")";
 	}
 
+	/**
+	 * Surcharge of method herits from ARB
+	 */
 	@Override
 	protected String _delete() {
 		

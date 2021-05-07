@@ -18,13 +18,16 @@ public class Disconnect extends HttpServlet {
         super();
     }
 
-
+    /**
+     * GET HTTP REQUEST
+     */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		System.out.println("Here");
+		// Delete all the session variables
 		HttpSession session = request.getSession();
 		session.invalidate();
 		
+		// Redirect user to the index page
 		RequestDispatcher rd = request.getRequestDispatcher("./index.jsp");
 		rd.forward(request, response);
 		

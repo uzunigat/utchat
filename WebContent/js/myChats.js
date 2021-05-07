@@ -60,10 +60,12 @@ $(document).ready(function() {
 
 		let id = currentRow.find("td:eq(0)").text();
 		let fin = currentRow.find("td:eq(4)").text().replace("*", "T");
+		let name = currentRow.find("td:eq(1)").text();
 
 		let form = document.createElement("form");
 		let element1 = document.createElement("input");
 		let element2 = document.createElement("input");
+		let element3 = document.createElement("input");
 
 		form.method = "POST";
 		form.action = "chat.jsp";
@@ -75,9 +77,14 @@ $(document).ready(function() {
 		element2.value = fin;
 		element2.name = "endDate";
 		element2.setAttribute("type", "hidden");
+		
+		element3.value = name;
+		element3.name = "chatName";
+		element3.setAttribute("type", "hidden");
 
 		form.appendChild(element1);
 		form.appendChild(element2);
+		form.appendChild(element3);
 
 		document.body.appendChild(form);
 

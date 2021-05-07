@@ -24,16 +24,17 @@ public class ValidationRegister extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		// Read User Information
 		String email = request.getParameter("email");
 		String nickname = request.getParameter("username");
 		String password = request.getParameter("password");
 		
-		System.out.println(User.searchUser(email).toString());
-		
+		// Create User object
 		if(User.searchUser(email) == null) {
 			
 			User user = new User(email, nickname, password, "Other");
 			
+			// Register User on the Database
 			try {
 				user.save();
 				RequestDispatcher rd = request.getRequestDispatcher("./home.jsp");
@@ -43,7 +44,8 @@ public class ValidationRegister extends HttpServlet {
 		        session.setAttribute("username", nickname);  
 		        session.setAttribute("password", password);
 		        session.setAttribute("role", user.getRole()); 
-
+		        
+		        // Redirect User to another page
 				rd.forward(request, response);
 				
 			} catch (ClassNotFoundException | SQLException | IOException e) {

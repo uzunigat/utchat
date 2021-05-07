@@ -27,7 +27,6 @@ public class EditChat extends HttpServlet {
 	 */
 	public EditChat() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
@@ -36,21 +35,20 @@ public class EditChat extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
+		
+		// Read parameters to update
 		String title = request.getParameter("title2").replace(" ", "");
 		String description = request.getParameter("description2");
 		String startDate = request.getParameter("startDate2").replace("T", " ");
 		String endDate = request.getParameter("endDate2").replace("T", " ");
-
-		System.out.println("Title: " + title + " Description: " + description + " Start Date: " + startDate
-				+ " End Date: " + endDate);
-
+		
+		// Create Chat object
 		DateFormat format = new SimpleDateFormat("YYYY-MM-dd HH:mm");
-
 		Chat chat = Chat.searchChat(title);
 
 		chat.setDescription(description);
-
+		
+		// Update Info in the Database
 		try {
 			chat.setStartDate(format.parse(startDate));
 			chat.setEndDate(format.parse(endDate));
@@ -59,9 +57,9 @@ public class EditChat extends HttpServlet {
 
 			e.printStackTrace();
 		}
-
+		
+		// Redirect user to MyChats page
 		RequestDispatcher rd = request.getRequestDispatcher("myChats.jsp");
-
 		rd.include(request, response);
 
 	}

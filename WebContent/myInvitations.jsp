@@ -18,7 +18,7 @@
 		<div class="h3 m-3 text-secondary float-left">My Invitations</div>
 
 		<table id='myTable' class="table m-3">
-			<thead>
+			<thead class="thead-light">
 				<tr>
 					<th scope="col"></th>
 					<th scope="col">Title</th>

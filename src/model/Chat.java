@@ -14,13 +14,36 @@ import java.util.Vector;
 
 import config.MyConnection;
 
+/**
+ * Chat model that extends from Active Record base
+ * @author Uriel
+ *
+ */
 public class Chat extends ActiveRecordBase{
-
+	
+	/**
+	 * Title Chat
+	 */
 	private String title;
+	
+	/**
+	 * Description Chat
+	 */
 	private String description;
+	
+	/**
+	 * StartDate
+	 */
 	private Date startDate;
+	
+	/**
+	 * EndDate
+	 */
 	private Date endDate;
 	
+	/**
+	 * Constructor by default
+	 */
 	public Chat() {
 		this.title = "";
 		this.description = "";
@@ -28,6 +51,14 @@ public class Chat extends ActiveRecordBase{
 		this.endDate = new Date();
 	}
 	
+	/**
+	 * Constructor
+	 * 
+	 * @param _title
+	 * @param _description
+	 * @param _startDate
+	 * @param _endDate
+	 */
 	public Chat(String _title, String _description, Date _startDate, Date _endDate) {
 		
 		this.title = _title;
@@ -38,6 +69,16 @@ public class Chat extends ActiveRecordBase{
 		
 	}
 	
+	/**
+	 * Constructor
+	 * 
+	 * @param _id
+	 * @param _title
+	 * @param _description
+	 * @param _startDate
+	 * @param _endDate
+	 * @param state
+	 */
 	public Chat(int _id, String _title, String _description, Date _startDate, Date _endDate, boolean state) {
 		
 		this._builtFromDB = state;
@@ -50,6 +91,7 @@ public class Chat extends ActiveRecordBase{
 		
 	}
 	
+	// Getters
 	public String getTitle() {
 		return title;
 	}
@@ -66,6 +108,7 @@ public class Chat extends ActiveRecordBase{
 		return endDate;
 	}
 	
+	// Setters
 	public void setStartDate(Date startDate) {
 		this.startDate = startDate;
 	}
@@ -81,6 +124,9 @@ public class Chat extends ActiveRecordBase{
 		this.description = description;
 	}
 	
+	/**
+	 * Surcharge of method herits from ARB
+	 */
 	@Override
 	protected String _update() {
 		
@@ -94,6 +140,9 @@ public class Chat extends ActiveRecordBase{
 							 
 	}
 
+	/**
+	 * Surcharge of method herits from ARB
+	 */
 	@Override
 	protected String _insert() {
 		
@@ -103,12 +152,22 @@ public class Chat extends ActiveRecordBase{
 				+ " VALUES('"+ this.title +"', '"+ this.description +"', '" + simpleDateFormat.format(startDate) +"', '"+ simpleDateFormat.format(endDate) +"')";
 	}
 
+	/**
+	 * Surcharge of method herits from ARB
+	 */
 	@Override
 	protected String _delete() {
 
 		return null;
 	}
 	
+	/**
+	 * Method to search all the chat by the email
+	 * 
+	 * @param email: Email to search their chats
+	 * @param owner: 1 if it's the owner
+	 * @return a Vector of Chats
+	 */
 	public static Vector<Chat> searchAllMyChats(String email, int owner) {
 		
 		String title = "";
@@ -161,7 +220,12 @@ public class Chat extends ActiveRecordBase{
 		
 	}
 	
-	
+	/**
+	 * Search a Chat by Title (unique)
+	 * 
+	 * @param title
+	 * @return chat found
+	 */
 	public static Chat searchChat(String title) {
 		
 		DateFormat format = new SimpleDateFormat("YYYY-MM-dd HH:mm");
@@ -197,6 +261,9 @@ public class Chat extends ActiveRecordBase{
 		
 	}
 	
+	/**
+	 * Converts the chat to String
+	 */
 	@Override
 	public String toString() {
 		

@@ -44,9 +44,9 @@
 				</div>
 
 				<div class="form-group mx-5">
-					<label for="exampleInputPassword1">Password</label> <input
-						type="password" class="form-control" name="password"
-						id="confirmPassword" placeholder="Password">
+					<label for="exampleInputPassword1">Confirm Password</label> <input
+						type="password" class="form-control" name="confirmPassword"
+						id="confirmPassword" placeholder="Confirm Password">
 				</div>
 
 				<button id="registerButton" type="submit" class="btn btn-primary mx-5 my-2 float-right ">

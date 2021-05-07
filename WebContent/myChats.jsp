@@ -22,7 +22,7 @@
 			data-toggle="modal" data-target="#exampleModal">Create Chat</button>
 
 		<table id="myTable" class="table m-3">
-			<thead>
+			<thead class="thead-light">
 				<tr>
 					<th scope="col"></th>
 					<th scope="col">Title</th>

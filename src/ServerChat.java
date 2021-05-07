@@ -16,15 +16,48 @@ import javax.websocket.OnMessage;
 import javax.websocket.OnOpen;
 import javax.websocket.Session;
 
+/**
+ * ServerChat class
+ * 
+ * This class make the socket connection between every Client and the Server
+ * @author Uriel
+ *
+ */
 @ServerEndpoint(value = "/echo/{chatId}/{nickname}")
 public class ServerChat {
-
+	
+	/**
+	 * Chat Map
+	 */
 	private static Map<String, CopyOnWriteArraySet<ServerChat>> chatRooms = new HashMap();
+	
+	/**
+	 * Current User connected
+	 */
 	private Session sessionUser = null;
+	
+	/**
+	 * Nickname of client
+	 */
 	private String nickname = "";
+	
+	/**
+	 * Id Client
+	 */
 	private String chatId = "";
+	
+	/**
+	 * Current User Object connected
+	 */
 	private User currentUser = null;
-
+	
+	/**
+	 * Event started when a client starts a connection
+	 * 
+	 * @param session: Current Session
+	 * @param nickname: Current nickname client
+	 * @param chatId: Current id Chat
+	 */
 	@OnOpen
 	public void onOpen(Session session, @PathParam("nickname") String nickname, @PathParam("chatId") String chatId)
 			throws ClassNotFoundException, SQLException, IOException {
@@ -48,7 +81,13 @@ public class ServerChat {
 		receivingMessage(session, joinMessage);
 
 	}
-
+	
+	/**
+	 * Event started when a message is received by the Server
+	 * 
+	 * @param session: Session who has sended a message
+	 * @param message: Message sended by the client
+	 */
 	@OnMessage
 	public void receivingMessage(Session session, String message) {
 
@@ -70,7 +109,10 @@ public class ServerChat {
 			}
 		}
 	}
-
+	
+	/**
+	 * Event Started when someone close the session
+	 */
 	@OnClose
 	public void closedConnection() {
 
@@ -80,7 +122,13 @@ public class ServerChat {
 			listConnectedUsers.remove(this);
 		}
 	}
-
+	
+	/**
+	 * Getter of all the users connected in some chat room
+	 * 
+	 * @param nameChatRoom
+	 * @return the list of all users connected in a chatroom
+	 */
 	public static List<User> getNameConnectedUsers(String nameChatRoom)
 			throws ClassNotFoundException, SQLException, IOException {
 

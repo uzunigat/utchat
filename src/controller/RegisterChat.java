@@ -46,14 +46,12 @@ public class RegisterChat extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
+		
+		// Read parameters sended by the user
 		Vector<String> members = new Vector<String>();
 		int id = 0;
-
 		Map m = request.getParameterMap();
-
 		Set s = m.entrySet();
-
 		Iterator it = s.iterator();
 
 		while (it.hasNext()) {
@@ -70,15 +68,17 @@ public class RegisterChat extends HttpServlet {
 
 		}
 		
+		// Format to the Date information and filter data
 		DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 		
 		String title = request.getParameter("title").replace(" ", "");
-		String description = request.getParameter("description").replace(" ", "");
+		String description = request.getParameter("description");
 		String startDate = request.getParameter("startDate");
 		String endDate = request.getParameter("endDate");
-
+		
+		// Create New Chat in the database
 		try {
-			System.out.println(startDate);
+ 
 			Chat chat = new Chat(title, description,
 					format.parse(startDate.replace("T", " ")),
 					format.parse(endDate.replace("T", " ")));

@@ -9,11 +9,26 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
+/**
+ * Connection to the Database 
+ * 
+ * @author Uriel
+ *
+ */
 public class MyConnection { // implémenté sous forme de singleton //
+	
+	/**
+	 * Unique Instance
+	 */
 	private static Connection singleton;
-
+	
+	/**
+	 * Constructor by Default
+	 * 
+	 */
 	private MyConnection() throws IOException, ClassNotFoundException, SQLException {
-		// protection
+		
+		// Read file properties
 		Properties param = new Properties();
 		URL urlFichierProp = MyConnection.class.getResource("./DBconfig.properties");
 		if (urlFichierProp == null) {
@@ -36,7 +51,10 @@ public class MyConnection { // implémenté sous forme de singleton //
 			}
 		}
 	}
-
+	
+	/**
+	 * Return unique instance
+	 */
 	public static Connection getInstance() throws IOException, ClassNotFoundException, SQLException {
 		if (singleton == null) {
 			new MyConnection();
